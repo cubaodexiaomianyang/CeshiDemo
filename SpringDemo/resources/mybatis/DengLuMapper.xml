@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.DengLuBiaoDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="DengLuBiaoprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="dengluid" property="dengluid"></result>
+    	<result column="`PASSWORD`" property="PASSWORD"></result>
+    	<result column="psdjiami" property="psdjiami"></result>
+    	<result column="lastdenglushijian" property="lastdenglushijian"></result>
+    	<result column="dengluIP" property="dengluIP"></result>
+    	
+    	<result column="email" property="email"></result>
+    </resultMap>
+
+    
+    <select id="countfj"  resultType="int" parameterType="DengLuBiaoprice">
+        SELECT count(*) FROM denglubiao d
+		 WHERE	1=1 
+		 	AND d.dengluid=#{dengluid}
+        	AND d.PASSWORD=#{PASSWORD}
+    </select> 
+    
+    <insert id="insert"  parameterType="FuJianBiaoprice">
+ 	<![CDATA[
+	INSERT INTO denglubiao(id,dengluid,`PASSWORD`,email,psdjiami,lastdenglushijian,dengluIp)
+	VALUES (#{id},#{dengluid},#{PASSWORD},#{email},#{psdjiami},#{lastdenglushijian},#{dengluIP})
+	]]>  
+	</insert>
+    
+</mapper>

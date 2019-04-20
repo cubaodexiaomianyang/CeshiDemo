@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.ShenHeDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="ShenHeprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="shenhecishu" property="shenhecishu"></result>
+    	<result column="shenheshijian" property="shenheshijian"></result>
+    	<result column="bohuiyuanyin" property="bohuiyuanyin"></result>
+    	<result column="shenhezhuangtai" property="shenhezhaungtai"></result>
+    	<result column="shenhe_chanpin_id" property="shenheChanpinId"></result>
+    </resultMap>
+    
+   	 <delete id="delete" parameterType="ShenHeprice">
+		DELETE FROM shenhe  
+		WHERE 
+	<if test="shenheChanpinId != null and shenheChanpinId!='' ">
+        shenhe_chanpin_id=#{shenheChanpinId}
+    </if>
+	</delete>
+    
+    
+    <delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from shenhe 
+	WHERE shenhe_chanpin_id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.shenheChanpinId}
+		</foreach>
+		)
+	</delete>
+    
+    <insert id="insert"  parameterType="ShenHeprice">
+ 	<![CDATA[
+	insert INTO shenhe(id,shenhecishu,shenheshijian,bohuiyuanyin,shenhezhuangtai,shenhe_chanpin_id)
+	VALUES (#{id},#{shenhecishu},#{shenheshijian},#{bohuiyuanyin},#{shenhezhaungtai},#{shenheChanpinId})
+	]]>  
+	</insert>
+    
+    <select id="find"  resultMap="base" parameterType="ShenHeprice">
+       SELECT t.* FROM shenhe t 
+       where 1=1
+       	<if test="shenheChanpinId != null and shenheChanpinId!='' ">
+       		AND t.shenhe_chanpin_id=#{shenheChanpinId}
+    	</if>
+    </select> 
+    
+    
+    <update id="update" parameterType="ShenHeprice">
+		UPDATE shenhe 
+		SET 
+			shenhecishu=#{shenhecishu},
+			shenheshijian=#{shenheshijian},
+			bohuiyuanyin=#{bohuiyuanyin},
+			shenhezhuangtai=#{shenhezhaungtai},
+			shenhe_chanpin_id=#{shenheChanpinId}
+			
+		WHERE shenhe_chanpin_id=#{shenheChanpinId}
+	</update>
+    
+    
+    <!-- 
+    
+     <select id="findByPage"  resultMap="base" parameterType="ChanPinprice">
+			SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+   	  </select>
+    
+	<select id="finddlid"  resultMap="base" parameterType="Userprice">
+      SELECT * FROM `user` WHERE denglu_id=#{dengluId}
+    </select>
+	
+	  -->
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.XinWenZiXunDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="XinWenZiXunprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="biaoti" property="biaoti"></result>
+    	<result column="fabushijian" property="fabushijian"></result>
+    	
+    	<result column="faburen" property="faburen"></result>
+    	<result column="xinwenneirong" property="xinwenneirong"></result>
+    	<result column="fengmiantupian" property="fengmiantupian"></result>
+    	
+    	<result column="xinwenlanmuid" property="xinwenlanmuid"></result>
+    	<result column="liulancount" property="liulancount"></result>
+    	<result column="dianzancount" property="dianzancount"></result>
+    	<result column="pingluncount" property="pingluncount"></result>
+    </resultMap>
+    
+    <insert id="insert"  parameterType="XinWenZiXunprice">
+ 	<![CDATA[
+	INSERT INTO xinwenzixun(id,biaoti,fabushijian,faburen,xinwenneirong,fengmiantupian,xinwenlanmuid,liulancount,dianzancount,pingluncount)
+	VALUES (#{id},#{biaoti},#{fabushijian},#{faburen},#{xinwenneirong},#{fengmiantupian},#{xinwenlanmuid},#{liulancount},#{dianzancount},#{pingluncount})
+	]]>  
+	</insert>
+    
+    
+    <select id="find"  resultMap="base" parameterType="XinWenZiXunprice">
+       SELECT t.* FROM xinwenzixun t 
+       where 1=1
+       <if test="id != null and id!='' ">
+        	AND t.id=#{id}
+       </if>
+    </select>
+    
+    <select id="finddantiao"  resultMap="base" parameterType="XinWenZiXunprice">
+       SELECT t.* FROM xinwenzixun t 
+       where 1=1
+       <if test="param.id != null and param.id!='' ">
+        	AND t.id=#{param.id}
+       </if>
+    </select>
+    
+    <select id="findByPage"  resultMap="base" parameterType="XinWenZiXunprice">
+       SELECT t.* FROM xinwenzixun t WHERE 1=1 
+       
+       <if test="param.xinwenlanmuid != null and param.xinwenlanmuid!='' ">
+        	AND t.xinwenlanmuid=#{param.xinwenlanmuid}
+       </if>
+    </select>
+    
+     <select id="finddt"  resultMap="base" parameterType="XinWenZiXunprice">
+       SELECT t.* FROM xinwenzixun t WHERE 1=1
+        	AND t.xinwenlanmuid=#{Id}
+    </select>
+    
+    <delete id="delete" parameterType="XinWenZiXunprice">
+	DELETE FROM xinwenzixun  
+	WHERE 
+	<if test="id != null and id!='' ">
+        id=#{id}
+    </if>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from xinwenzixun 
+	WHERE id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.id}
+		</foreach>
+		)
+	</delete>
+	<update id="update" parameterType="XinWenZiXunprice">
+		UPDATE xinwenzixun 
+		SET biaoti=#{biaoti},
+			faburen=#{faburen},
+			xinwenneirong=#{xinwenneirong},
+			fengmiantupian=#{fengmiantupian},
+			xinwenlanmuid=#{xinwenlanmuid}
+		WHERE id=#{id}
+	</update>
+</mapper>

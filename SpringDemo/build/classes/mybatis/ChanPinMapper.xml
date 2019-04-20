@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.ChanPinDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="ChanPinprice"><!-- 前面数据库，后面实体 -->
+    	<result column="chanpin_id" property="chanpinId"></result>
+    	<result column="img" property="img"></result>
+    	<result column="biaoti" property="biaoti"></result>
+    	<result column="shixian" property="shixian"></result>
+    	<result column="jianjie" property="jianjie"></result>
+    	<result column="tiaojian" property="tiaojian"></result>
+    	<result column="liucheng" property="liucheng"></result>
+    	<result column="lianxiwomen" property="lianxiwomen"></result>
+    	<result column="chanpingfenleiid" property="chanpingfenleiid"></result>
+    	<result column="faburen" property="faburen"></result>
+    	<result column="chanpinfabushijian" property="chanpinfabushijian"></result>
+    	<result column="jine" property="jine"></result>
+    	<result column="gongsiguimo" property="gongsiguimo"></result>
+    	<result column="rongzizhouqi" property="rongzizhouqi"></result>
+    	<result column="lianxibumen" property="lianxibumen"></result>
+    	<!-- 虚拟字段 -->
+    	<result column="shenhecishu" property="shenhecishu"></result>
+    	<result column="shenhezhaungtai" property="shenhezhuangtai"></result>
+    	<result column="bohuiyuanyin" property="bohuiyuanyin"></result>
+    	<result column="jobmingzi" property="chanpingfenlei"></result>
+    </resultMap>
+    
+      <select id="findByPage"  resultMap="base" parameterType="ChanPinprice">
+			SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+   	  </select>
+   	  
+   	  <select id="findByPagetj"  resultMap="base" parameterType="ChanPinprice">
+			SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+			WHERE 
+			<if test="param.chanpingfenleiid != null and param.chanpingfenleiid!='' ">
+		        chanpingfenleiid=#{param.chanpingfenleiid} AND shenhezhuangtai is NULL
+		    </if>
+			
+   	  </select>
+   	  
+   	   <select id="findByPagesh"  resultMap="base" parameterType="ChanPinprice">
+			SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+			WHERE 
+			<if test="param.chanpingfenleiid != null and param.chanpingfenleiid!='' ">
+		        chanpingfenleiid=#{param.chanpingfenleiid} AND shenhezhuangtai is not NULL
+		    </if>
+			
+   	  </select>
+   	  
+   	 <delete id="delete" parameterType="ChanPinprice">
+		DELETE FROM chanpin  
+		WHERE 
+	<if test="chanpinId != null and chanpinId!='' ">
+        chanpin_id=#{chanpinId}
+    </if>
+	</delete>
+    
+    <delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from chanpin 
+	WHERE chanpin_id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.chanpinId}
+		</foreach>
+		)
+	</delete>
+    
+    <insert id="insert"  parameterType="ChanPinprice">
+ 	<![CDATA[
+	insert INTO chanpin (chanpin_id,img,biaoti,shixian,jianjie,tiaojian,liucheng,lianxiwomen,chanpingfenleiid,faburen,chanpinfabushijian,jine,gongsiguimo,rongzizhouqi,lianxibumen)
+	VALUES (#{chanpinId},#{img},#{biaoti},#{shixian},#{jianjie},#{tiaojian},#{liucheng},#{lianxiwomen},#{chanpingfenleiid},#{faburen},#{chanpinfabushijian},#{jine},#{gongsiguimo},#{rongzizhouqi},#{lianxibumen})
+	]]>  
+	</insert>
+    
+    <select id="find"  resultMap="base" parameterType="ChanPinprice">
+       SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+       where 1=1
+       <if test="chanpinId != null and chanpinId!='' ">
+        	AND c.chanpin_id=#{chanpinId}
+       </if>
+    </select> 
+    
+    <update id="update" parameterType="ChanPinprice">
+		UPDATE chanpin 
+		SET img=#{img},
+			biaoti=#{biaoti},
+			shixian=#{shixian},
+			jianjie=#{jianjie},
+			tiaojian=#{tiaojian},
+			liucheng=#{liucheng},
+			lianxiwomen=#{lianxiwomen},
+			chanpingfenleiid=#{chanpingfenleiid},
+			faburen=#{faburen},
+			chanpinfabushijian=#{chanpinfabushijian}
+		WHERE chanpin_id=#{chanpinId}
+	</update>
+	
+	<select id="findid"  resultMap="base" parameterType="ChanPinprice">
+      SELECT * FROM `chanpin` WHERE chanpin_id=#{param.chanpinId}
+    </select>
+	
+</mapper>

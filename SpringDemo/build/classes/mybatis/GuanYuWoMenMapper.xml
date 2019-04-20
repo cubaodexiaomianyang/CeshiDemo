@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.GuanYuWoMenDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="GuanYuWoMenprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="jianjie" property="jianjie"></result>
+    	<result column="zhidu" property="zhidu"></result>
+    	<result column="tuandui" property="tuandui"></result>
+    	<result column="goujia" property="goujia"></result>
+    	<result column="lianxi" property="lianxi"></result>
+    </resultMap>
+    
+    <select id="find"  resultMap="base" parameterType="GuanYuWoMenprice">
+       select * from guanyuwomen
+    </select>
+    
+    
+     <!--
+      <insert id="insert"  parameterType="GuanYuWoMenprice">
+ 	<![CDATA[
+	insert INTO chanpin (id,gongsiguimo,jinrongjigou,rongzizhouqi,lianxibumen,dianhua,fabushijian)
+	VALUES (#{id},#{gongsiguimo},#{jinrongjigou},#{rongzizhouqi},#{lianxibumen},#{dianhua},#{fabushijian})
+	]]>  
+	</insert>
+     
+      <select id="findByPage"  resultMap="base" parameterType="ChanPinprice">
+			SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+   	  </select>
+   	  
+   	 <delete id="delete" parameterType="ChanPinprice">
+		DELETE FROM chanpin  
+		WHERE 
+	<if test="chanpinId != null and chanpinId!='' ">
+        chanpin_id=#{chanpinId}
+    </if>
+	</delete>
+    
+    <delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from chanpin 
+	WHERE chanpin_id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.chanpinId}
+		</foreach>
+		)
+	</delete>
+    
+   
+    
+    <select id="find"  resultMap="base" parameterType="ChanPinprice">
+       SELECT c.*,u.jobmingzi,s.shenhecishu,s.bohuiyuanyin,s.shenhezhuangtai FROM chanpin c
+			LEFT JOIN shenhe s ON c.chanpin_id=s.shenhe_chanpin_id
+			LEFT JOIN userjob u ON c.chanpingfenleiid=u.id
+       where 1=1
+       <if test="chanpinId != null and chanpinId!='' ">
+        	AND c.chanpin_id=#{chanpinId}
+       </if>
+    </select> 
+    
+    <update id="update" parameterType="ChanPinprice">
+		UPDATE chanpin 
+		SET img=#{img},
+			biaoti=#{biaoti},
+			shixian=#{shixian},
+			jianjie=#{jianjie},
+			tiaojian=#{tiaojian},
+			liucheng=#{liucheng},
+			lianxiwomen=#{lianxiwomen},
+			chanpingfenleiid=#{chanpingfenleiid},
+			faburen=#{faburen},
+			chanpinfabushijian=#{chanpinfabushijian}
+		WHERE chanpin_id=#{chanpinId}
+	</update>
+    
+    
+    
+	
+	
+	<select id="finddlid"  resultMap="base" parameterType="Userprice">
+      SELECT * FROM `user` WHERE denglu_id=#{dengluId}
+    </select>
+	
+	  -->
+</mapper>

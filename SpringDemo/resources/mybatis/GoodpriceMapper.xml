@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.GoodpriceDao">
+
+    <resultMap id="base" type="BaseGoodprice"></resultMap>
+    
+    
+    <select id="find"  resultMap="base" parameterType="BaseGoodprice">
+       SELECT t.* FROM mf_good_price t 
+       WHERE 1=1 
+       <if test="id != null and id!='' ">
+        	AND t.id=#{id}
+       </if>
+       <if test="goodId != null and goodId!='' ">
+        	AND t.goodId=#{goodId}
+       </if>
+       <if test="natureId != null and natureId!='' ">
+        	AND t.natureId=#{natureId}
+       </if>
+       ORDER BY t.createTime ASC
+    </select> 
+    <select id="findByPage"  resultMap="base" parameterType="BaseGoodprice">
+       SELECT t.* FROM mf_good_price t WHERE 1=1
+        ORDER BY t.createTime
+    </select>
+    <select id="count"  resultType="int" parameterType="BaseGoodprice">
+       SELECT count(*) FROM mf_good_price t WHERE 1=1 
+    </select>      
+    <insert id="insert"  parameterType="BaseGoodprice">	
+ 	<![CDATA[
+	INSERT INTO mf_good_price(id,goodId,specId,natureId,sinmb,miaoshu,nowprice,price,number,createTime) 
+	VALUES (#{id},#{goodId},#{specId},#{natureId},#{sinmb},#{miaoshu},#{nowprice},#{price},#{number},#{createTime})
+	]]>  
+	</insert>
+	<delete id="delete" parameterType="BaseGoodprice">
+	DELETE FROM mf_good_price  
+	WHERE 
+	<if test="id != null and id!='' ">
+        id=#{id}
+    </if>
+	<if test="goodId != null and goodId!='' ">
+        goodId=#{goodId}
+    </if> 
+	</delete>
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from mf_good_price 
+	WHERE id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.id}
+		</foreach>
+		)
+	</delete>
+	<update id="update" parameterType="BaseGoodprice">
+		UPDATE mf_good_price 
+		SET sinmb=#{sinmb},
+			miaoshu=#{miaoshu},
+			nowprice=#{nowprice},
+			price=#{price},
+			number=#{number},
+			createTime =#{createTime}
+		WHERE id=#{id}
+	</update>	
+	
+</mapper>

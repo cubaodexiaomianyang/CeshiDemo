@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.FuJianGuanXiBiaoDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="FuJianGuanXiBiaoprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="fujianid" property="fujianid"></result>
+    	<result column="fujiantype" property="fujiantype"></result>
+    	<result column="guanlianid" property="guanlianid"></result>
+    	<result column="guanlianbiaoming" property="guanlianbiaoming"></result>
+    	<result column="shangchuanren" property="shangchuanren"></result>
+    	<result column="shangchaunshijian" property="shangchaunshijian"></result>
+    	<result column="beizhuxinxi" property="beizhuxinxi"></result>
+    	<result column="urlxinxi" property="urlxinxi"></result>
+    </resultMap>
+   
+   <insert id="insert"  parameterType="FuJianGuanXiBiaoprice">
+ 	<![CDATA[
+	INSERT INTO fujianguanxibiao (id,fujianid,fujiantype,guanlianid,guanlianbiaoming,shangchuanren,shangchaunshijian,beizhuxinxi,urlxinxi)
+	VALUES (#{id},#{fujianid},#{fujiantype},#{guanlianid},#{guanlianbiaoming},#{shangchuanren},#{shangchaunshijian},#{beizhuxinxi},#{urlxinxi})
+	]]>  
+	</insert>
+	
+	<select id="find"  resultMap="base" parameterType="FuJianGuanXiBiaoprice">
+       SELECT t.* FROM fujianguanxibiao t 
+       WHERE 1=1 
+       <if test="guanlianid != null and guanlianid!='' ">
+        	AND t.guanlianid=#{guanlianid}
+       </if>
+    </select>
+	
+    <delete id="delete" parameterType="FuJianGuanXiBiaoprice">
+	DELETE FROM fujianguanxibiao  
+	WHERE 
+		<if test="fujianid != null and fujianid!='' ">
+	        fujianid=#{fujianid}
+	    </if>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from fujianguanxibiao 
+	WHERE fujianid in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.fujianid}
+		</foreach>
+		)
+	</delete>
+</mapper>

@@ -1,0 +1,57 @@
+.title{
+	background: #f86941;
+}
+.list{
+	font-size: 0.56rem;
+	color: #fff;
+	border-bottom: #fff solid 1px;
+	height:2rem;
+	line-height:2rem;
+	text-align: center;
+	background: #f86941;
+}
+.list_o{
+	background: #3469ab;
+}
+.con{
+	margin-top: 0.5rem;
+}
+
+.text{
+	padding-left: 0.5rem;
+}
+.special{
+	margin-left: -0.8rem;
+	margin-top: -0.6rem;
+	border-radius: 0.5rem;
+	background: #306aae;
+}
+.con p{
+	color: #737b91;
+	margin: 0;
+	padding: 0;
+	height:1rem;
+	line-height: 1rem;
+	font-size: 0.56rem;
+}
+.con h3{
+	padding: 0.3rem 0 0 0.3rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #fff;
+}
+.con h5{
+	padding: 0.3rem 0.3rem 0.3rem 0;
+	text-align: right;
+	font-size: 0.6rem;
+	font-weight: 700;
+	color: #fff;
+}
+.shadows{
+	padding-top: 0.3rem;
+	border-radius: 0.3rem;
+	box-shadow: #eee 3px 3px 10px 2px;
+}
+.con_n{
+	margin: 0.3rem 0 0.8rem 0;
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.StudentDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="Studentprice"></resultMap>
+    
+    
+    <select id="find"  resultMap="base" parameterType="Studentprice">
+       SELECT t.* FROM student t 
+       WHERE 1=1 
+       <if test="id != null and id!='' ">
+        	AND t.id=#{id}
+       </if>
+       ORDER BY t.id ASC
+    </select> 
+    <select id="findByPage"  resultMap="base" parameterType="Studentprice">
+       SELECT t.* FROM student t WHERE 1=1
+    </select>  
+    <select id="count"  resultType="int" parameterType="Studentprice">
+       SELECT count(*) FROM student t WHERE 1=1 
+    </select>   
+    <insert id="insert"  parameterType="Studentprice">	
+ 	<![CDATA[
+	INSERT INTO student (id,`name`,sex,age)
+	VALUES (#{id},#{name},#{sex},#{age})
+	]]>  
+	</insert>
+	<delete id="delete" parameterType="Studentprice">
+	DELETE FROM student  
+	WHERE 
+	<if test="id != null and id!='' ">
+        id=#{id}
+    </if> 
+	</delete>
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from student
+	WHERE id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.id}
+		</foreach>
+		)
+	</delete>
+	<update id="update" parameterType="Studentprice">
+		UPDATE student 
+		SET id=#{id},
+			name=#{name},
+			sex=#{sex},
+			age=#{age}
+		WHERE id=#{id}
+	</update>	
+	
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.UserHangYeGuanXiDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="UserHangYeGuanXiprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="userhangyeid" property="userhangyeid"></result>
+    	<result column="userid" property="userId"></result>
+    	<result column="userfenleiid" property="userfenleiid"></result>
+    </resultMap>
+    
+    <update id="update" parameterType="UserHangYeGuanXiprice">
+		UPDATE userhangyeguanxi 
+		SET userhangyeid=#{userhangyeid},
+			userid=#{userId},
+			userfenleiid=#{userfenleiid}
+		WHERE userid=#{userId}
+	</update>
+	
+	<insert id="insert"  parameterType="UserHangYeGuanXiprice">
+ 	<![CDATA[
+	INSERT INTO userhangyeguanxi(id,userhangyeid,userid,userfenleiid)
+	VALUES (#{id},#{userhangyeid},#{userId},#{userfenleiid})
+	]]>  
+	</insert>
+	
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from userhangyeguanxi 
+	WHERE userid in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.userId}
+		</foreach>
+		)
+	</delete>
+	
+	<delete id="delete" parameterType="UserHangYeGuanXiprice">
+		DELETE FROM userhangyeguanxi  
+		WHERE 
+	<if test="userId != null and userId!='' ">
+       userid=#{userId}
+    </if>
+	</delete>
+	
+	 <select id="find"  resultMap="base" parameterType="UserHangYeGuanXiprice">
+       SELECT * FROM userhangyeguanxi 
+       WHERE  userid=#{userId}
+    </select> 
+	
+</mapper>

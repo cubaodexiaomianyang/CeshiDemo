@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.FuJianBiaoDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="FuJianBiaoprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="fujianmingcheng" property="fujianmingcheng"></result>
+    	<result column="fujianwenjianming" property="fujianwenjianming"></result>
+    	<result column="fujianhouzhui" property="fujianhouzhui"></result>
+    	<result column="fujiandaxiao" property="fujiandaxiao"></result>
+    	<result column="fujianlujing" property="fujianlujing"></result>
+    	<result column="fujianqitalujing" property="fujianqitalujing"></result>
+    	<result column="shangchuanshijian" property="shangchuanshijian"></result>
+    	<result column="xiazhaicishu" property="xiazhaicishu"></result>
+    	<result column="fujianstate" property="fujianstate"></result>
+    	
+    	<!-- 虚拟字段的绑定 -->
+    	<result column="guanlianbiaoming" property="guanlianbiaoming"></result>
+    	<result column="guanlianid" property="guanlianid"></result>
+    </resultMap>
+    
+    <insert id="insert"  parameterType="FuJianBiaoprice">
+ 	<![CDATA[
+	INSERT INTO fujianbiao(id,fujianmingcheng,fujianwenjianming,fujianhouzhui,fujiandaxiao,	fujianlujing,fujianqitalujing,shangchuanshijian,xiazhaicishu,fujianstate)
+	VALUES (#{id},#{fujianmingcheng},#{fujianwenjianming},#{fujianhouzhui},#{fujiandaxiao},#{fujianlujing},#{fujianqitalujing},#{shangchuanshijian},#{xiazhaicishu},#{fujianstate})
+	]]>  
+	</insert>
+    
+    <select id="find"  resultMap="base" parameterType="FuJianBiaoprice">
+       SELECT t.* FROM fujianbiao t 
+       WHERE 1=1 
+       <if test="id != null and id!='' ">
+        	AND t.id=#{id}
+       </if>
+    </select>
+    
+    
+    <select id="findstate"  resultMap="base" parameterType="FuJianBiaoprice">
+       SELECT t.* FROM fujianbiao t 
+       WHERE 1=1 
+       <if test="param.fujianstate != null and param.fujianstate!='' ">
+        	AND t.fujianstate=#{param.fujianstate}
+       </if>
+    </select>
+    
+ 	  <select id="findByPagefj"  resultMap="base" parameterType="FuJianBiaoprice">
+		SELECT f.id,f.fujianmingcheng,f.shangchuanshijian,f.xiazhaicishu FROM fujianbiao f
+		INNER JOIN fujianguanxibiao gx ON gx.fujianid=f.id
+		WHERE guanlianbiaoming=#{guanlianbiaoming} AND guanlianid=#{guanlianid}
+    </select>
+    
+    <delete id="delete" parameterType="FuJianBiaoprice">
+	DELETE FROM fujianbiao  
+	WHERE 
+		<if test="id != null and id!='' ">
+	        id=#{id}
+	    </if>
+	</delete>
+    
+    <delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from fujianbiao 
+	WHERE id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.id}
+		</foreach>
+		)
+	</delete>
+	
+	<update id="update" parameterType="FuJianBiaoprice">
+		UPDATE fujianbiao 
+		SET fujianlujing=#{fujianlujing}
+		WHERE id=#{id}
+	</update>
+	
+</mapper>

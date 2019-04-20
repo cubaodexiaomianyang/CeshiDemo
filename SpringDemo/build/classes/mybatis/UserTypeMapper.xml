@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.UserTypeDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="UserTypeprice">
+    	<result column="id" property="id"></result>
+    	<result column="fenleimingcheng" property="Fenleimingcheng"></result>
+    	<result column="userstate" property="userstate"></result>
+    </resultMap>
+    
+    <select id="find"  resultMap="base" parameterType="UserTypeprice">
+       SELECT * FROM usertype t 
+       WHERE 1=1 
+       <if test="id != null and id!='' ">
+        id=#{id}
+    </if>
+    </select> 
+    
+</mapper>

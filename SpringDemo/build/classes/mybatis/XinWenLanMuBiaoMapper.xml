@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.XinWenLanMuBiaoDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="XinWenLanMuprice"><!-- 前面数据库，后面实体 -->
+    	<result column="id" property="id"></result>
+    	<result column="lanmumingcheng" property="lanmumingcheng"></result>
+    	<result column="create_time" property="createTime"></result>
+    	<result column="lanmufengmian" property="lanmufengmian"></result>
+    	<result column="urlweizhi" property="urlweizhi"></result>
+    	<result column="zongbankuaiid" property="zongbankuaiid"></result>
+    	<!-- 虚拟字段的绑定 -->
+    	<result column="bankuaiming" property="zongbankuaiName"></result>
+    </resultMap>
+    
+     <insert id="insert"  parameterType="XinWenLanMuprice">
+ 	<![CDATA[
+	INSERT INTO xinwenlanmubiao(id,lanmumingcheng,create_time,lanmufengmian,urlweizhi,zongbankuaiid)
+	VALUES (#{id},#{lanmumingcheng},#{createTime},#{lanmufengmian},#{urlweizhi},#{zongbankuaiid})
+	]]>  
+	</insert>
+    
+    <select id="find"  resultMap="base" parameterType="XinWenLanMuprice">
+       SELECT * FROM xinwenlanmubiao t
+       WHERE 1=1
+    <if test="id != null and id!='' ">
+      	AND  id=#{id}
+    </if>
+    <if test="zongbankuaiid != null and zongbankuaiid!='' ">
+      	AND  zongbankuaiid=#{zongbankuaiid}
+    </if>
+    
+    </select> 
+    
+    <select id="findByPage"  resultMap="base" parameterType="XinWenLanMuprice">
+       SELECT t.*,z.bankuaiming FROM xinwenlanmubiao t 
+		INNER JOIN zongbankuai z ON z.id=t.zongbankuaiid
+		WHERE 1=1 
+    </select>
+    
+      <delete id="delete" parameterType="XinWenLanMuprice">
+	DELETE FROM xinwenlanmubiao  
+	WHERE 
+	<if test="id != null and id!='' ">
+        id=#{id}
+    </if>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from xinwenlanmubiao 
+	WHERE id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.id}
+		</foreach>
+		)
+	</delete>
+	
+
+	<update id="update" parameterType="XinWenLanMuprice">
+		UPDATE xinwenlanmubiao
+		SET lanmumingcheng=#{lanmumingcheng}
+		WHERE id=#{id}
+	</update>
+
+    
+</mapper>
+

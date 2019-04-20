@@ -1,0 +1,84 @@
+.bg{
+	background-image: url(../image/bg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;	
+	padding-bottom:0.6rem;
+}
+.title{
+	color:#FFF;
+	background-color:#f86941;
+	}
+
+.nav_s{
+	text-align: center;
+	font-size: 0.8rem;
+	color: #aeaeae;
+}
+.nav_s span{
+	height: 2rem;
+	line-height: 2rem;
+	width: 3rem;
+	padding:0.1rem 0.6rem 0.1rem 0.8rem;
+	border-radius: 5rem;
+}
+.nav_s_o{
+	color: #fff;
+	background: -webkit-linear-gradient(left, #F67739 , #D82F00); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(right, #F67739, #D82F00); /* Opera 11.1 - 12.0 */
+	  background: -moz-linear-gradient(right, #F67739, #D82F00); /* Firefox 3.6 - 15 */
+	  background: linear-gradient(to right, #F67739 , #D82F00); /* 标准的语法 */
+}
+.news_con img{
+	margin: 0.6rem  0.3rem 0.3rem 0.3rem;
+	width: 5rem;
+	height:4rem;
+}
+.font h6{
+	height: 0.8rem;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	font-size: 12px;
+	font-weight: 700;
+}
+.font_ell {
+	height: 2.8em;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	color: #939393;
+	font-size: 10px;
+}
+.font div{
+	margin-top: 10px;
+	font-size: 0.6rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+.text{
+	padding: 5px 10px 10px 10px;
+}
+.news{
+	margin: 1rem 1.1rem 0 1.1rem;
+	background: #fff;
+	border-radius: 0.5rem;
+}
+.content img{
+	width: 100%;
+}
+.content{
+	position: relative;
+	overflow: hidden;
+}
+.content_text{
+	color: #fff;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-align: center;
+	position:absolute;
+	bottom: 40%;
+	left: 0;
+	right: 0;
+}
+.content_text span{
+	font-size: 2rem;
+}

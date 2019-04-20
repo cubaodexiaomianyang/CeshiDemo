@@ -1,0 +1,120 @@
+@charset "utf-8";
+.title  img{
+	margin-top:0.3rem;
+	height: 1.4rem;
+	width: 1.4rem;
+}
+.row , .col-1 , .col-2 , .col-3 , .col-4 , .col-5 , .col-6 , .col-7 , .col-8 , .col-9 , .col-10 , .col-11 , .col-12{
+	margin:0;
+	padding:0;
+	}
+.title{
+	border-bottom:#d7d7d7 solid 1px;;
+	margin-top:0.3rem;
+	margin-bottom:0.3rem;
+	padding-bottom:1rem;
+	height:2.6rem;
+	line-height:2rem;
+	text-align:center;
+	}
+.nav{
+	font-size:0.9rem;
+	color:#FFF;
+	text-align:center;
+	}
+.nav_con{
+	height: 5rem;
+	line-height: 8rem;
+	background-color: #F86941;
+	}
+.nav_con span{
+	padding: 1.6rem 0.1rem 0 0.1rem;
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: 1.6rem 1.6rem;
+	}
+.nav_img1{
+	background-image: url(../image/computer.png);	
+	}
+.nav_img2{
+	background-image: url(../image/analytics.png);	
+	}
+.nav_img3{
+	background-image: url(../image/chat.png);	
+	}
+.nav_img4{
+	background-image: url(../image/laptop-5.png);	
+	}
+.nav_img5{
+	background-image: url(../image/smartphone-9.png);	
+	}
+.nav_icon{
+	background-image: url(../image/icon%20_1.png);
+	background-repeat: no-repeat;
+	background-position: -0.4rem center;
+	background-size: 1.6rem 1.6rem;
+	display:none;
+	}
+.nav_icon1{
+	display:block !important;
+	}
+.con_div{
+	width:100%;
+	height:100%;
+	background-color:#2066b2;
+	position:absolute;
+	top:0;
+	left:0;
+	display:none;
+	}
+.con{
+	color:#FFF;
+	position:relative;
+	}
+.con h6{
+	text-align:center;
+	}
+.con p{
+	font-size: 0.6rem;
+	text-indent: 2em;
+	margin: 0.6rem 0.8rem;
+	}
+.con_1{
+	display:block !important;
+	}
+.con_all{
+	display:block !important;
+	}
+.foot{
+	color:#FFF;
+	font-size:0.66rem;
+	text-align:right;
+	height:2rem;
+	line-height:1.8rem;
+	border:#FFF solid 2px;
+	border-radius:1rem;
+	}
+.foot div{
+	padding-right: 0.4rem;
+	background-repeat: no-repeat;
+	background-position: 0.6rem center;
+	background-size:0.6rem 0.6rem;
+	}
+.foot_border{
+	border-left:#FFF solid 2px;
+	border-right:#FFF solid 2px;
+	}
+.foot_img1{
+	background-image: url(../image/like.png);	
+	}
+.foot_img2{
+	background-image: url(../image/speech-bubble.png);	
+	}
+.foot_img3{
+	background-image: url(../image/import.png);	
+	}
+.foot_height{
+	margin-bottom:3rem;
+	height:4rem;
+	background-color: #2066b2;
+	}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.repository.UserDao"><!-- 指向那个dao 类方便使用 -->
+
+    <resultMap id="base" type="Userprice"><!-- 前面数据库，后面实体 -->
+    	<result column="user_id" property="userId"></result>
+    	<result column="user_name" property="userName"></result>
+    	<result column="phone" property="phone"></result>
+    	<result column="user_jifen" property="userJifen"></result>
+    	<result column="denglu_id" property="dengluId"></result>
+    	
+    	
+    	<result column="suoshugongsiname" property="suoshugongsiname"></result>
+    	<result column="gongsijianjie" property="gongsijianjie"></result>
+    	<result column="createtime" property="createtime"></result>
+    	<result column="fujianlujing" property="img"></result>
+    </resultMap>
+    
+    <insert id="insert"  parameterType="Userprice">
+ 	<![CDATA[
+	INSERT INTO `user`(user_id,user_name,phone,user_jifen,denglu_id)
+	VALUES (#{userId},#{userName},#{phone},#{userJifen},#{dengluId})
+	]]>  
+	</insert>
+    
+      <select id="findByPage"  resultMap="base" parameterType="Userprice">
+		SELECT user_id,user_name,phone,ut.fenleimingcheng,uj.jobmingzi,user_jifen,denglu_id
+		FROM `user` u
+		INNER JOIN userhangyeguanxi ugx ON u.user_id=ugx.userid
+		INNER JOIN userjob uj ON uj.id =ugx.userhangyeid
+		INNER JOIN usertype ut ON ut.id=ugx.userfenleiid 
+		
+    </select>
+    
+    
+	
+	<delete id="delete" parameterType="Userprice">
+	DELETE FROM user  
+	WHERE 
+	<if test="userId != null and userId!='' ">
+        user_id=#{userId}
+    </if>
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.util.List">
+	DELETE from user 
+	WHERE user_id in(
+		<foreach item="o" collection="list" open="" separator="," close="" >
+			#{o.userId}
+		</foreach>
+		)
+	</delete>
+	
+	<select id="find"  resultMap="base" parameterType="Userprice">
+       SELECT t.* FROM user t 
+       where 1=1
+       <if test="userId != null and userId!='' ">
+        	AND t.user_id=#{userId}
+       </if>
+    </select> 
+	
+	<select id="findshuju"  resultMap="base" parameterType="Userprice">
+       select u.*,f.fujianlujing,uj.id from `user` u
+		INNER JOIN userhangyeguanxi ugx on ugx.userid=u.user_id
+		INNER JOIN userjob uj on uj.id=ugx.userhangyeid
+		LEFT JOIN fujianguanxibiao fgx ON fgx.guanlianid=u.user_id
+		left JOIN fujianbiao f on f.id=fgx.fujianid
+		where fgx.guanlianbiaoming='user'
+       <if test="ujid != null and ujid!='' ">
+        	AND uj.id=#{ujid}
+       </if>
+    </select>
+	
+	<select id="findmin"  resultMap="base" parameterType="Userprice">
+      select u.*,uj.jobmingzi,ut.fenleimingcheng,fj.fujianlujing from `user` u
+		INNER JOIN userhangyeguanxi ugx ON ugx.userid=u.user_id
+		INNER JOIN userjob uj on uj.id=ugx.userhangyeid
+		INNER JOIN usertype ut on ut.id=ugx.userfenleiid
+		left JOIN fujianguanxibiao fgx on fgx.guanlianid=u.user_id
+		left JOIN fujianbiao fj on fj.id=fgx.fujianid
+		where fgx.guanlianbiaoming='user' AND u.denglu_id=#{dengluId}
+    </select>
+    
+	
+	<select id="finddlid"  resultMap="base" parameterType="Userprice">
+      SELECT * FROM `user` WHERE denglu_id=#{dengluId}
+    </select>
+    
+	<select id="findid"  resultMap="base" parameterType="Userprice">
+      select u.*,f.fujianlujing from `user` u
+		LEFT JOIN fujianguanxibiao fgx ON fgx.guanlianid=u.user_id
+		left JOIN fujianbiao f on f.id=fgx.fujianid
+		where fgx.guanlianbiaoming='user'
+		AND u.user_id=#{userId}
+    </select>
+	
+	<select id="findname"  resultMap="base" parameterType="Userprice">
+      SELECT * FROM `user` WHERE user_name=#{userName}
+    </select>
+	
+	<update id="update" parameterType="Userprice">
+		UPDATE user 
+		SET user_id=#{userId},
+			user_name=#{userName},
+			phone=#{phone},
+			user_jifen=#{userJifen},
+			denglu_id=#{dengluId}
+		WHERE user_id=#{userId}
+	</update>
+</mapper>
